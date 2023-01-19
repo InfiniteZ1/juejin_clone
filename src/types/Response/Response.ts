@@ -1,5 +1,8 @@
-export interface Response {
-  data: any
+export interface Response<T> {
+  data: {
+    id: number
+    attributes: T
+  }[]
   meta: {
     pagination: {
       page: number

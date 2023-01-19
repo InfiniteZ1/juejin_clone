@@ -1,10 +1,16 @@
 .home {
+  cursor: default;
 
-  .navigation {
+  .tab-list {
     display: flex;
+    align-items: center;
+    height: 50px;
+    font-size: 14px;
+    padding: 0 16px;
 
-    // .logo {
-
-    // }
+    .tab {
+      padding: 0 12px;
+      cursor: pointer;
+    }
   }
 }

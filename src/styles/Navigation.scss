@@ -1,0 +1,160 @@
+@mixin banner-item-styles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-width: 28px;
+  height: 100%;
+  margin: 0 12px;
+  cursor: pointer;
+}
+
+@mixin banner-item {
+  .banner-item {
+
+    @include banner-item-styles;
+
+    &-text.is-active {
+      color: var(--brand-normal);
+    }
+
+    &:hover {
+      color: var(--font-first);
+
+      &::before {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        content: '';
+        width: 100%;
+        height: 2px;
+        background-color: var(--brand-normal);
+      }
+    }
+
+    .badge {
+      position: absolute;
+      top: 5px;
+      left: -2px;
+      z-index: 10;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 2px 7px;
+      background-color: var(--navigation-badge-background);
+      border-radius: 50px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+      transform: scale(0.5);
+      line-height: 18px;
+      color: var(--navigation-badge-text);
+    }
+  }
+}
+
+@mixin banner-dropdown {
+  .ant-dropdown-menu .ant-dropdown-menu-item {
+    padding: 0 12px;
+
+    @include banner-item;
+
+    &:hover {
+      background-color: var(--navigation-background);
+    }
+
+    .banner-item {
+      margin: 0 45px;
+      height: 48px;
+
+      .badge {
+        top: 2px;
+      }
+    }
+  }
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  border-bottom: 1px solid var(--navigation-border);
+  cursor: default;
+
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 15px;
+
+    span {
+      margin-left: 6px;
+      font-weight: 700;
+      width: 70px;
+
+      @media screen and (max-width: 640px) {
+        display: none;
+      }
+    }
+  }
+
+  .banner {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    color: var(--font-second);
+    font-size: 14px;
+    list-style: none;
+
+    @media screen and (max-width: 1024px) {
+      display: none;      
+    }
+
+    @include banner-item;
+  }
+
+  .banner-more {
+    @include banner-item-styles;
+    width: fit-content;
+    font-size: 14px;
+
+    .icon {
+      transition: 0.4s ease-in-out;
+      margin-left: 4px;
+      font-size: 14px;
+    }
+
+    &.is-folder {
+      font-size: 16px;
+
+      @media screen and (min-width: 1024px) {
+        display: none;
+      }
+
+      .banner-more-text {
+        color: var(--brand-normal);
+      }
+    }
+
+    &.is-active {
+      color: var(--brand-normal);
+
+      .icon {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+}
+
+.banner-dropdown {
+  @include banner-dropdown;
+}
+
+//更多下拉样式
+.banner-more-dropdown {
+  @include banner-dropdown;
+
+  .ant-dropdown-menu .ant-dropdown-menu-item .banner-item {
+    margin: 0 12px;
+  }
+}
