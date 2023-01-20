@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Banner } from '@/types/common'
+import { Banner } from '@/types/Common'
 import { CaretDownOutlined } from '@ant-design/icons'
 import { MenuProps } from 'antd'
 import { Image, Dropdown } from 'antd'
@@ -18,6 +18,12 @@ const Navigation: React.FC<PropsType> = (props) => {
 
   const onDropdownItemClick = () => {
     setDropdownOpen(false)
+  }
+
+  const themeChange = () => {
+    const html = document.querySelector('html')!
+    const theme =  html.getAttribute('data-theme')
+    html.setAttribute('data-theme', theme == 'light' ? 'dark' : 'light')
   }
 
   const dropdownItems: MenuProps['items'] = banners.map((item) => ({
@@ -77,6 +83,8 @@ const Navigation: React.FC<PropsType> = (props) => {
           <CaretDownOutlined className='icon' />
         </div>
       </Dropdown>
+      <div style={{ flex: 1 }}></div>
+      <div className='theme' onClick={themeChange}>切换主题</div>
     </div>
   )
 }

@@ -54,21 +54,26 @@
 }
 
 @mixin banner-dropdown {
-  .ant-dropdown-menu .ant-dropdown-menu-item {
-    padding: 0 12px;
+  .ant-dropdown-menu {
+    background-color: var(--navigation-background);
 
-    @include banner-item;
-
-    &:hover {
-      background-color: var(--navigation-background);
-    }
-
-    .banner-item {
-      margin: 0 45px;
-      height: 48px;
-
-      .badge {
-        top: 2px;
+    .ant-dropdown-menu-item {
+      color: var(--font-second);
+      padding: 0 12px;
+  
+      @include banner-item;
+  
+      &:hover {
+        background-color: var(--navigation-background);
+      }
+  
+      .banner-item {
+        margin: 0 45px;
+        height: 48px;
+  
+        .badge {
+          top: 2px;
+        }
       }
     }
   }
@@ -80,6 +85,7 @@
   height: 60px;
   border-bottom: 1px solid var(--navigation-border);
   cursor: default;
+  background-color: var(--navigation-background);
 
   .logo {
     display: flex;
@@ -91,6 +97,7 @@
       margin-left: 6px;
       font-weight: 700;
       width: 70px;
+      color: var(--font-first);
 
       @media screen and (max-width: 640px) {
         display: none;
@@ -121,7 +128,8 @@
     .icon {
       transition: 0.4s ease-in-out;
       margin-left: 4px;
-      font-size: 14px;
+      font-size: 12px;
+      color: var(--font-second);
     }
 
     &.is-folder {
@@ -142,6 +150,21 @@
       .icon {
         transform: rotate(-180deg);
       }
+    }
+  }
+
+  .theme {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: var(--font-second);
+    font-size: 14px;
+    margin-right: 25px;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--navigation-active-text);
     }
   }
 }

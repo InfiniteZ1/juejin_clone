@@ -1,12 +1,31 @@
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { GetStaticProps } from 'next'
+import { Banner, Tab, Tag } from '@/types/Common'
 import Navigation from '@/components/Navigation'
-import { Banner, Tab } from '@/types/common'
-import { getBanners, getTabs } from '@/api/homeApi'
+import { MenuProps } from 'antd'
+import { Dropdown } from 'antd'
+import { getBanners, getTabs, getTags } from '@/api/homeApi'
 
 const Home: React.FC<PropsType> = (props) => {
-  const { banners, tabs } = props
+  const { banners, tabs, tags } = props
+  const router = useRouter()
+  const tab = typeof router.query.tab == 'string' ? router.query.tab : 'all'
+  const tagMap = useMemo(() => {
+    const map = new Map<string, string[]>()
+    tags.forEach((item) => {
+      const value = map.get(item.tab)
+      map.set(item.tab, value ? [...value, item.tag] : [item.tag])
+    })
+    return map
+  }, [tags])
+
+  const onTabClick = (tabName: string) => {
+    return () => {
+      router.push('/' + tabName)
+    }
+  }
 
   return (
     <>
@@ -15,12 +34,32 @@ const Home: React.FC<PropsType> = (props) => {
       </Head>
       <div className='home'>
         <Navigation banners={banners} />
-        <div className='tab-list'>
-          {tabs.map((item) => (
-            <span className='tab' key={item.title}>
-              {item.title}
-            </span>
-          ))}
+        <div className='tab-list-wrapper'>
+          <div className='tab-list'>
+            {tabs.map((item) => {
+              const itemTags = tagMap.get(item.tab)
+              const dropdownItems: MenuProps['items'] = itemTags?.map((tag) => ({
+                key: tag,
+                label: <div>{tag}</div>
+              }))
+
+              return (
+                <Dropdown
+                  key={item.title}
+                  menu={{ items: dropdownItems }}
+                  disabled={itemTags ? false : true}
+                  overlayClassName='tab-dropdown'
+                >
+                  <span
+                    className={'tab' + (tab == item.tab ? ' is-active' : '')}
+                    onClick={onTabClick(item.tab)}
+                  >
+                    {item.title}
+                  </span>
+                </Dropdown>
+              )
+            })}
+          </div>
         </div>
       </div>
     </>
@@ -30,18 +69,17 @@ const Home: React.FC<PropsType> = (props) => {
 export const getStaticProps: GetStaticProps<PropsType> = async () => {
   try {
     const bannerRes = (await getBanners()).data
-    const banners: Banner[] = bannerRes.data.map((item) => ({
-      title: item.attributes.title,
-      path: item.attributes.path,
-      badge: item.attributes.badge
-    }))
+    const banners: Banner[] = bannerRes.data.map((item) => item.attributes)
     const tabRes = (await getTabs()).data
-    const tabs: Tab[] = tabRes.data.map((item) => ({ title: item.attributes.title }))
+    const tabs: Tab[] = tabRes.data.map((item) => item.attributes)
+    const tagRes = (await getTags()).data
+    const tags = tagRes.data.map((item) => item.attributes)
 
     return {
       props: {
         banners,
-        tabs
+        tabs,
+        tags
       },
       revalidate: 60
     }
@@ -51,7 +89,8 @@ export const getStaticProps: GetStaticProps<PropsType> = async () => {
     return {
       props: {
         banners: [],
-        tabs: []
+        tabs: [],
+        tags: []
       },
       revalidate: 60
     }
@@ -61,6 +100,7 @@ export const getStaticProps: GetStaticProps<PropsType> = async () => {
 interface PropsType {
   banners: Banner[]
   tabs: Tab[]
+  tags: Tag[]
 }
 
 export default Home

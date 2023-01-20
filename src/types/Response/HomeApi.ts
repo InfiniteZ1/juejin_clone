@@ -1,21 +1,8 @@
 import { Response } from './Response'
+import { Banner, Tab, Tag } from '../Common'
 
-type BannerAttribute = {
-  title: string
-  path: string
-  badge: string | null
-  createdAt: string
-  publishedAt: string
-  updatedAt: string
-}
+export type BannersResponse = Response<Banner>
 
-export type BannersResponse = Response<BannerAttribute>
+export type TabsResponse = Response<Tab>
 
-type TabAttribute = {
-  title: string
-  createdAt: string
-  publishedAt: string
-  updatedAt: string
-}
-
-export type TabsResponse = Response<TabAttribute>
+export type TagsResponse = Response<Tag>

@@ -1,13 +1,13 @@
 //所有页面的样式
 @use './Home.scss';
 
-
 //所有组件的样式
 @use './Navigation.scss';
 
 :root {
   width: 100vw;
   height: 100vh;
+  background-color: var(--html-background-color);
 }
 
 * {
@@ -17,10 +17,14 @@
 }
 
 :root[data-theme='light'] {
+  --html-background-color: #f4f5f5;
   --navigation-background: #fff;
   --navigation-border: #f1f1f1;
   --navigation-badge-background: #ee502f;
   --navigation-badge-text: #fff;
+  --navigation-tab-text: #71777c;
+  --navigation-active-text: #007fff;
+  --navigation-tag-background: #f4f5f5;
   --brand-normal: #1e80ff;
   --brand-hover: #1171ee;
   --brand-click: #0060dd;
@@ -31,6 +35,21 @@
   --font-fourth: #c2c8d1;
 }
 
-// :root[data-theme = dark] {
-//   background-color: #000;
-// }
+:root[data-theme='dark'] {
+  --html-background-color: #1f1f1f;
+  --navigation-background: #141414;
+  --navigation-border: #f1f1f1;
+  --navigation-badge-background: #f0f0f0;
+  --navigation-badge-text: #595959;
+  --navigation-tab-text: #bfbfbf;
+  --navigation-active-text: #ffffff;
+  --navigation-tag-background: #595959;
+  --brand-normal: #ffffff;
+  --brand-hover: #bfbfbf;
+  --brand-click: #f5f5f5;
+  --brand-disable: #434343;
+  --font-first: #ffffff;
+  --font-second: #bfbfbf;
+  --font-third: #8c8c8c;
+  --font-fourth: #595959;
+}

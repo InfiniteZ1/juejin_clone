@@ -1,16 +1,65 @@
 .home {
   cursor: default;
 
-  .tab-list {
-    display: flex;
-    align-items: center;
-    height: 50px;
-    font-size: 14px;
-    padding: 0 16px;
+  .tab-list-wrapper {
+    background-color: var(--navigation-background);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+    overflow-x: auto;
 
-    .tab {
-      padding: 0 12px;
-      cursor: pointer;
+    .tab-list {
+      display: flex;
+      align-items: center;
+      height: 48px;
+      max-width: 960px;
+      font-size: 14px;
+      padding: 0 16px;
+      margin: auto;
+      color: var(--navigation-tab-text);
+
+      .tab {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        padding: 0 12px;
+        white-space: nowrap;
+        cursor: pointer;
+
+        &.is-active,
+        &:hover {
+          color: var(--navigation-active-text);
+        }
+      }
+    }
+  }
+}
+
+.tab-dropdown.ant-dropdown {
+  width: 340px;
+  font-weight: 400;
+  // display: block !important;
+
+  @media screen and (max-width: 640px) {
+    display: none;
+  }
+
+  .ant-dropdown-menu {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 12px;
+    background-color: var(--navigation-background);
+
+    &-item {
+      margin: 0 12px 12px 0;
+      padding: 2px 12px;
+      color: var(--navigation-tab-text);
+      border-radius: 16px;
+      background-color: var(--navigation-tag-background);
+
+      &:hover {
+        color: var(--navigation-active-text);
+        background-color: var(--navigation-tag-background);
+      }
     }
   }
 }
