@@ -18,13 +18,13 @@
 
 :root[data-theme='light'] {
   --html-background-color: #f4f5f5;
-  --navigation-background: #fff;
-  --navigation-border: #f1f1f1;
-  --navigation-badge-background: #ee502f;
-  --navigation-badge-text: #fff;
-  --navigation-tab-text: #71777c;
-  --navigation-active-text: #007fff;
-  --navigation-tag-background: #f4f5f5;
+  --background: #fff;
+  --border: #f1f1f1;
+  --badge-background: #ee502f;
+  --badge-text: #fff;
+  --tab-text: #71777c;
+  --active-text: #007fff;
+  --tag-background: #f4f5f5;
   --brand-normal: #1e80ff;
   --brand-hover: #1171ee;
   --brand-click: #0060dd;
@@ -33,17 +33,18 @@
   --font-second: #515767;
   --font-third: #8a919f;
   --font-fourth: #c2c8d1;
+  --divide: #e5e6eb;
 }
 
 :root[data-theme='dark'] {
   --html-background-color: #1f1f1f;
-  --navigation-background: #141414;
-  --navigation-border: #f1f1f1;
-  --navigation-badge-background: #f0f0f0;
-  --navigation-badge-text: #595959;
-  --navigation-tab-text: #bfbfbf;
-  --navigation-active-text: #ffffff;
-  --navigation-tag-background: #595959;
+  --background: #141414;
+  --border: #f1f1f1;
+  --badge-background: #f0f0f0;
+  --badge-text: #595959;
+  --tab-text: #bfbfbf;
+  --active-text: #ffffff;
+  --tag-background: #595959;
   --brand-normal: #ffffff;
   --brand-hover: #bfbfbf;
   --brand-click: #f5f5f5;

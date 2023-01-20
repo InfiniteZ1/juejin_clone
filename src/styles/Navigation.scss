@@ -41,21 +41,21 @@
       overflow: hidden;
       text-overflow: ellipsis;
       padding: 2px 7px;
-      background-color: var(--navigation-badge-background);
+      background-color: var(--badge-background);
       border-radius: 50px;
       text-align: center;
       font-size: 16px;
       font-weight: 500;
       transform: scale(0.5);
       line-height: 18px;
-      color: var(--navigation-badge-text);
+      color: var(--badge-text);
     }
   }
 }
 
 @mixin banner-dropdown {
   .ant-dropdown-menu {
-    background-color: var(--navigation-background);
+    background-color: var(--background);
 
     .ant-dropdown-menu-item {
       color: var(--font-second);
@@ -64,7 +64,7 @@
       @include banner-item;
   
       &:hover {
-        background-color: var(--navigation-background);
+        background-color: var(--background);
       }
   
       .banner-item {
@@ -83,9 +83,10 @@
   display: flex;
   align-items: center;
   height: 60px;
-  border-bottom: 1px solid var(--navigation-border);
+  border-bottom: 1px solid var(--border);
   cursor: default;
-  background-color: var(--navigation-background);
+  white-space: nowrap;
+  background-color: var(--background);
 
   .logo {
     display: flex;
@@ -164,7 +165,7 @@
     cursor: pointer;
 
     &:hover {
-      color: var(--navigation-active-text);
+      color: var(--active-text);
     }
   }
 }

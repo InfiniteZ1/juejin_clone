@@ -1,15 +1,16 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { GetStaticProps } from 'next'
-import { Banner, Tab, Tag } from '@/types/Common'
+import { Article, Banner, Sort, Tab, Tag } from '@/types/Common'
 import Navigation from '@/components/Navigation'
-import { MenuProps } from 'antd'
+import { EyeOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons'
+import { Image, MenuProps } from 'antd'
 import { Dropdown } from 'antd'
-import { getBanners, getTabs, getTags } from '@/api/homeApi'
+import { getBanners, getPassages, getSorts, getTabs, getTags } from '@/api/homeApi'
 
 const Home: React.FC<PropsType> = (props) => {
-  const { banners, tabs, tags } = props
+  const { banners, tabs, tags, sorts, articles } = props
   const router = useRouter()
   const tab = typeof router.query.tab == 'string' ? router.query.tab : 'all'
   const tagMap = useMemo(() => {
@@ -20,6 +21,11 @@ const Home: React.FC<PropsType> = (props) => {
     })
     return map
   }, [tags])
+  const [currentPage, setCurrentPage] = useState(1) //页码
+  const currentArticles = useMemo(() => {
+    const start = (currentPage - 1) * 4
+    return articles.slice(start, start + 4)
+  }, [currentPage, articles])
 
   const onTabClick = (tabName: string) => {
     return () => {
@@ -61,6 +67,52 @@ const Home: React.FC<PropsType> = (props) => {
             })}
           </div>
         </div>
+        <div className='home-content'>
+          <div className='content-passage'>
+            <ul className='passage-header'>
+              {sorts.map((item) => (
+                <li className='passage-header-item' key={item.title}>
+                  {item.title}
+                </li>
+              ))}
+            </ul>
+            <div className='entry-list'>
+              {currentArticles.map((item) => (
+                <div className='entry' key={item.id}>
+                  <ul className='entry-header'>
+                    <li className='entry-author'>{item.author}</li>
+                    <li className='dividing'></li>
+                    <li className='entry-time'>3天前</li>
+                    <li className='dividing'></li>
+                    <li className='entry-tag'>{item.tags}</li>
+                  </ul>
+                  <div className='entry-layout'>
+                    <div className='entry-text'>
+                      <h4>{item.title}</h4>
+                      <p className='entry-content'>{item.description}</p>
+                      <div className='entry-action'>
+                        <span className='entry-action-item'>
+                          <EyeOutlined className='icon' />
+                          {item.count}
+                        </span>
+                        <span className='entry-action-item'>
+                          <LikeOutlined className='icon' />
+                          {item.good}
+                        </span>
+                        <span className='entry-action-item'>
+                          <MessageOutlined className='icon' />
+                          {item.comment}
+                        </span>
+                      </div>
+                    </div>
+                    <Image className='entry-image' src={item.cover} alt='' preview={false} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className='content-aside'></div>
+        </div>
       </div>
     </>
   )
@@ -69,17 +121,23 @@ const Home: React.FC<PropsType> = (props) => {
 export const getStaticProps: GetStaticProps<PropsType> = async () => {
   try {
     const bannerRes = (await getBanners()).data
-    const banners: Banner[] = bannerRes.data.map((item) => item.attributes)
+    const banners = bannerRes.data.map((item) => item.attributes)
     const tabRes = (await getTabs()).data
-    const tabs: Tab[] = tabRes.data.map((item) => item.attributes)
+    const tabs = tabRes.data.map((item) => item.attributes)
     const tagRes = (await getTags()).data
     const tags = tagRes.data.map((item) => item.attributes)
+    const sortRes = (await getSorts()).data
+    const sorts = sortRes.data.map((item) => item.attributes)
+    const passageRes = (await getPassages()).data
+    const articles: Article[] = passageRes.data.map((item) => ({ ...item.attributes, id: item.id }))
 
     return {
       props: {
         banners,
         tabs,
-        tags
+        tags,
+        sorts,
+        articles
       },
       revalidate: 60
     }
@@ -90,7 +148,9 @@ export const getStaticProps: GetStaticProps<PropsType> = async () => {
       props: {
         banners: [],
         tabs: [],
-        tags: []
+        tags: [],
+        sorts: [],
+        articles: []
       },
       revalidate: 60
     }
@@ -101,6 +161,8 @@ interface PropsType {
   banners: Banner[]
   tabs: Tab[]
   tags: Tag[]
+  sorts: Sort[]
+  articles: Article[]
 }
 
 export default Home
