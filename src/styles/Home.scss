@@ -1,12 +1,3 @@
-@mixin list-header($color) {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  font-size: 14px;
-  overflow-x: auto;
-  color: $color;
-}
-
 .home {
   cursor: default;
 
@@ -52,7 +43,12 @@
       background-color: var(--background);
 
       .passage-header {
-        @include list-header(var(--tab-text));
+        display: flex;
+        align-items: center;
+        list-style: none;
+        font-size: 14px;
+        overflow-x: auto;
+        color: var(--tab-text);
         padding: 12px 20px;
         border-bottom: 1px solid hsla(0, 0%, 59.2%, 0.1);
         overflow-x: auto;
@@ -70,77 +66,6 @@
           &.is-active,
           &:hover {
             color: var(--active-text);
-          }
-        }
-      }
-
-      .entry-list {
-        .entry {
-          padding: 12px 20px 14px 20px;
-
-          &-layout {
-            display: flex;
-            align-items: center;
-          }
-
-          &-image {
-            flex-shrink: 0;
-            width: 120px;
-            height: 80px;
-          }
-
-          &-text {
-            flex: 1 1 auto;
-            white-space: nowrap;
-            overflow: hidden;
-            margin-right: 15px;
-          }
-
-          &-header {
-            @include list-header(var(--font-third));
-            font-size: 12px;
-            margin-bottom: 12px;
-
-            .dividing {
-              width: 1px;
-              height: 12px;
-              background-color: var(--divide);
-              margin: 0 8px;
-            }
-
-            .entry-author {
-              color: var(--font-first);
-            }
-          }
-
-          h4 {
-            color: var(--font-first);
-            text-overflow: ellipsis;
-            overflow: hidden;
-          }
-
-          &-content {
-            margin-top: 12px;
-            color: var(--font-third);
-            font-size: 12px;
-            text-overflow: ellipsis;
-            overflow: hidden;
-          }
-
-          &-action {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-            font-size: 12px;
-            color: var(--font-second);
-
-            &-item {
-              padding: 0 5px;
-
-              .icon {
-                margin-right: 4px;
-              }
-            }
           }
         }
       }

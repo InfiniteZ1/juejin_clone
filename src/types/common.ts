@@ -22,6 +22,7 @@ export interface Tag extends Attribute {
 
 export interface Sort extends Attribute {
   title: string
+  sort: string
 }
 
 export interface Passage extends Attribute {
@@ -33,8 +34,9 @@ export interface Passage extends Attribute {
   good: number
   comment: number
   author: string
+  tab: string
   tags: string
-  date: string
+  sorts: string | null
 }
 
 export interface Article extends Passage {
