@@ -1,3 +1,8 @@
+export interface AttributeData<T> {
+  id: number
+  attributes: T
+}
+
 export interface Attribute {
   createdAt: string
   updatedAt: string
@@ -41,4 +46,9 @@ export interface Passage extends Attribute {
 
 export interface Article extends Passage {
   id: number
+}
+
+export interface Advertisement extends Attribute {
+  title: string
+  url: string
 }

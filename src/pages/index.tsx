@@ -1,16 +1,24 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { GetStaticProps } from 'next'
-import { Article, Banner, Sort, Tab, Tag } from '@/types/Common'
+import { Advertisement, Article, AttributeData, Banner, Sort, Tab, Tag } from '@/types/Common'
 import Navigation from '@/components/Navigation'
-import { MenuProps } from 'antd'
-import { Dropdown } from 'antd'
-import { getBanners, getPassages, getSorts, getTabs, getTags } from '@/api/homeApi'
 import EntryList from '@/components/EntryList'
+import { CloseOutlined } from '@ant-design/icons'
+import { MenuProps } from 'antd'
+import { Dropdown, Image } from 'antd'
+import {
+  getAdvertisements,
+  getBanners,
+  getPassages,
+  getSorts,
+  getTabs,
+  getTags
+} from '@/api/homeApi'
 
 const Home: React.FC<PropsType> = (props) => {
-  const { banners, tabs, tags, sorts, articles } = props
+  const { banners, tabs, tags, sorts, articles, advertisements } = props
   const router = useRouter()
   const tab = typeof router.query.tab == 'string' ? router.query.tab : 'all' //路由tab参数
   const tag = typeof router.query.tag == 'string' ? decodeURIComponent(router.query.tag) : '' //路由tag参数，解除utf8编码
@@ -32,6 +40,9 @@ const Home: React.FC<PropsType> = (props) => {
       sort == 'all' ? newArticles : newArticles.filter((item) => item.sorts?.includes(sort))
     return newArticles
   }, [articles, tab, tag, sort])
+  const [visibleAdvertisements, setVisibleAdvertisements] = useState(
+    advertisements.map((item) => ({ ...item, show: true }))
+  ) //正在显示的广告
 
   const onTabClick = (tabName: string) => {
     return () => router.push('/' + tabName)
@@ -57,6 +68,13 @@ const Home: React.FC<PropsType> = (props) => {
       // console.log(newQuery)
       router.push({ pathname: paramPath, query: newQuery })
     }
+  }
+
+  const closeAdvertisement = (adverId: number) => {
+    return () =>
+      setVisibleAdvertisements(
+        visibleAdvertisements.map((item) => (item.id == adverId ? { ...item, show: false } : item))
+      )
   }
 
   return (
@@ -108,7 +126,26 @@ const Home: React.FC<PropsType> = (props) => {
             </ul>
             <EntryList articles={filteredArticles} />
           </div>
-          <div className='content-aside'></div>
+          <div className='content-aside'>
+            <div className='advertisement'>
+              {visibleAdvertisements
+                .filter((item) => item.show)
+                .map((item) => (
+                  <div className='advertisement-item' key={item.id}>
+                    <Image src={item.attributes.url} alt={item.attributes.title} preview={false} />
+                    <CloseOutlined className='icon' onClick={closeAdvertisement(item.id)} />
+                    <div className='advertisement-label'>广告</div>
+                  </div>
+                ))}
+            </div>
+            <div className='app-block'>
+              <Image src='/QRcode.png' alt='' width={50} height={50} preview={false} />
+              <div className='app-block-content'>
+                <div className='app-block-header'>下载稀土掘金APP</div>
+                <div className='app-block-desc'>一个帮助开发者成长的社区</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
@@ -127,6 +164,8 @@ export const getStaticProps: GetStaticProps<PropsType> = async () => {
     const sorts = sortRes.data.map((item) => item.attributes)
     const passageRes = (await getPassages()).data
     const articles: Article[] = passageRes.data.map((item) => ({ ...item.attributes, id: item.id }))
+    const advertisementRes = (await getAdvertisements()).data
+    const advertisements = advertisementRes.data
 
     return {
       props: {
@@ -134,7 +173,8 @@ export const getStaticProps: GetStaticProps<PropsType> = async () => {
         tabs,
         tags,
         sorts,
-        articles
+        articles,
+        advertisements
       },
       revalidate: 60
     }
@@ -147,7 +187,8 @@ export const getStaticProps: GetStaticProps<PropsType> = async () => {
         tabs: [],
         tags: [],
         sorts: [],
-        articles: []
+        articles: [],
+        advertisements: []
       },
       revalidate: 60
     }
@@ -160,6 +201,7 @@ interface PropsType {
   tags: Tag[]
   sorts: Sort[]
   articles: Article[]
+  advertisements: AttributeData<Advertisement>[]
 }
 
 export default Home

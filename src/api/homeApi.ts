@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 import {
+  AdvertisementsResponse,
   BannersResponse,
   PassageSResponse,
   SortsResponse,
@@ -25,4 +26,8 @@ export const getSorts = () => {
 
 export const getPassages = () => {
   return request.get<PassageSResponse>('/passages')
+}
+
+export const getAdvertisements = () => {
+  return request.get<AdvertisementsResponse>('/advertisements')
 }

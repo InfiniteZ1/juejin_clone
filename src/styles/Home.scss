@@ -36,6 +36,7 @@
   &-content {
     max-width: 960px;
     margin: 15px auto 0 auto;
+    position: relative;
 
     .content-passage {
       max-width: 700px;
@@ -67,6 +68,83 @@
           &:hover {
             color: var(--active-text);
           }
+        }
+      }
+    }
+
+    .content-aside {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 240px;
+
+      @media screen and (max-width: 1024px) {
+        display: none;
+      }
+
+      .advertisement {
+        width: 100%;
+        //广告的一些颜色可以固定
+
+        &-item {
+          position: relative;
+          margin-bottom: 15px;
+          cursor: pointer;
+
+          .icon {
+            display: none;
+            position: absolute;
+            top: 6px;
+            right: 5px;
+            font-size: 12px;
+            color: #909090;
+            padding: 2px;
+          }
+
+          &:hover .icon {
+            display: block;
+          }
+        }
+
+        &-label {
+          position: absolute;
+          right: 10px;
+          bottom: 10px;
+          padding: 0 15px;
+          line-height: 36px;
+          height: 36px;
+          font-size: 20px;
+          font-weight: 300;
+          z-index: 1;
+          transform: scale(0.5);
+          transform-origin: right bottom;
+          color: #fff;
+          background-color: rgba(0, 0, 0, 0.2);
+          border: 1px solid #fff;
+          border-radius: 6px;
+        }
+      }
+
+      .app-block {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background-color: var(--background);
+
+        &-content {
+          margin-left: 15px;
+        }
+
+        &-header {
+          color: var(--font-first);
+          margin-bottom: 5px;
+          font-size: 14px;
+        }
+
+        &-desc {
+          font-size: 12px;
+          line-height: 20px;
+          color: var(--font-third);
         }
       }
     }
