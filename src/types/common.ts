@@ -52,3 +52,11 @@ export interface Advertisement extends Attribute {
   title: string
   url: string
 }
+
+export interface Rank extends Attribute {
+  author: string
+  avatar: string
+  level: string//图片链接
+  post: string
+  company: string | null
+}

@@ -1,0 +1,53 @@
+.author-rank {
+  margin-top: 15px;
+  background-color: var(--background);
+
+  .rank-title {
+    padding: 12px 16px;
+    border-bottom: 1px solid hsla(0, 0%, 59.2%, 0.1);
+    color: var(--font-first);
+  }
+
+  .rank-list {
+    color: var(--font-first);
+
+    &-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--hover-background);
+      }
+
+      .ant-avatar {
+        flex-shrink: 0;
+        margin-right: 5px;
+      }
+
+      .rank-user {
+        overflow: hidden;
+
+        &-profile,
+        .ant-image {
+          display: flex;
+          align-items: center;
+        }
+
+        &-name {
+          margin-right: 4px;
+        }
+
+        &-position {
+          max-width: 100%;
+          font-size: 12px;
+          color: var(--font-third);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}

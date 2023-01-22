@@ -1,5 +1,5 @@
 import { Response } from './Response'
-import { Advertisement, Banner, Passage, Sort, Tab, Tag } from '../Common'
+import { Advertisement, Banner, Passage, Rank, Sort, Tab, Tag } from '../Common'
 
 export type BannersResponse = Response<Banner>
 
@@ -12,3 +12,5 @@ export type SortsResponse = Response<Sort>
 export type PassageSResponse = Response<Passage>
 
 export type AdvertisementsResponse = Response<Advertisement>
+
+export type RanksResponse = Response<Rank>

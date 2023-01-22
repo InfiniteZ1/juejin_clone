@@ -8,8 +8,8 @@ const EntryList: React.FC<PropsType> = (porps) => {
   const { articles } = porps
   const [currentPage, setCurrentPage] = useState(1) //页码
   const currentArticles = useMemo(() => {
-    const start = (currentPage - 1) * 4 //4篇一页
-    return articles.slice(start, start + 4)
+    const start = (currentPage - 1) * 5 //5篇一页
+    return articles.slice(start, start + 5)
   }, [currentPage, articles])
 
   const onPageChange = (page: number) => {

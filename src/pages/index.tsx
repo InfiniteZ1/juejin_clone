@@ -2,9 +2,10 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { GetStaticProps } from 'next'
-import { Advertisement, Article, AttributeData, Banner, Sort, Tab, Tag } from '@/types/Common'
+import { Advertisement, Article, AttributeData, Banner, Rank, Sort, Tab, Tag } from '@/types/Common'
 import Navigation from '@/components/Navigation'
 import EntryList from '@/components/EntryList'
+import AuthorRank from '@/components/AuthorRank'
 import { CloseOutlined } from '@ant-design/icons'
 import { MenuProps } from 'antd'
 import { Dropdown, Image } from 'antd'
@@ -12,13 +13,14 @@ import {
   getAdvertisements,
   getBanners,
   getPassages,
+  getRanks,
   getSorts,
   getTabs,
   getTags
 } from '@/api/homeApi'
 
 const Home: React.FC<PropsType> = (props) => {
-  const { banners, tabs, tags, sorts, articles, advertisements } = props
+  const { banners, tabs, tags, sorts, articles, advertisements, ranks } = props
   const router = useRouter()
   const tab = typeof router.query.tab == 'string' ? router.query.tab : 'all' //路由tab参数
   const tag = typeof router.query.tag == 'string' ? decodeURIComponent(router.query.tag) : '' //路由tag参数，解除utf8编码
@@ -145,6 +147,7 @@ const Home: React.FC<PropsType> = (props) => {
                 <div className='app-block-desc'>一个帮助开发者成长的社区</div>
               </div>
             </div>
+            <AuthorRank ranks={ranks} />
           </div>
         </div>
       </div>
@@ -166,6 +169,8 @@ export const getStaticProps: GetStaticProps<PropsType> = async () => {
     const articles: Article[] = passageRes.data.map((item) => ({ ...item.attributes, id: item.id }))
     const advertisementRes = (await getAdvertisements()).data
     const advertisements = advertisementRes.data
+    const rankRes = (await getRanks()).data
+    const ranks = rankRes.data.map((item) => item.attributes)
 
     return {
       props: {
@@ -174,7 +179,8 @@ export const getStaticProps: GetStaticProps<PropsType> = async () => {
         tags,
         sorts,
         articles,
-        advertisements
+        advertisements,
+        ranks
       },
       revalidate: 60
     }
@@ -188,7 +194,8 @@ export const getStaticProps: GetStaticProps<PropsType> = async () => {
         tags: [],
         sorts: [],
         articles: [],
-        advertisements: []
+        advertisements: [],
+        ranks: []
       },
       revalidate: 60
     }
@@ -202,6 +209,7 @@ interface PropsType {
   sorts: Sort[]
   articles: Article[]
   advertisements: AttributeData<Advertisement>[]
+  ranks: Rank[]
 }
 
 export default Home

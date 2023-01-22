@@ -3,6 +3,7 @@ import {
   AdvertisementsResponse,
   BannersResponse,
   PassageSResponse,
+  RanksResponse,
   SortsResponse,
   TabsResponse,
   TagsResponse
@@ -30,4 +31,8 @@ export const getPassages = () => {
 
 export const getAdvertisements = () => {
   return request.get<AdvertisementsResponse>('/advertisements')
+}
+
+export const getRanks = () => {
+  return request.get<RanksResponse>('/ranks')
 }

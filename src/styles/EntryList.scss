@@ -1,6 +1,13 @@
 .entry-list {
+  width: 100%;
+  
   .entry {
     padding: 12px 20px 14px 20px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--hover-background);
+    }
 
     &-layout {
       display: flex;

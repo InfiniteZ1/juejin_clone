@@ -4,10 +4,9 @@
 //所有组件的样式
 @use './Navigation.scss';
 @use './EntryList.scss';
+@use './AuthorRank.scss';
 
 :root {
-  width: 100vw;
-  height: 100vh;
   background-color: var(--html-background-color);
 }
 
@@ -35,6 +34,7 @@
   --font-third: #8a919f;
   --font-fourth: #c2c8d1;
   --divide: #e5e6eb;
+  --hover-background: hsla(0,0%,84.7%,.1);
 }
 
 :root[data-theme='dark'] {
@@ -54,4 +54,6 @@
   --font-second: #bfbfbf;
   --font-third: #8c8c8c;
   --font-fourth: #595959;
+  --divide: #e5e6eb;
+  --hover-background: hsla(0,0%,84.7%,.1);
 }
