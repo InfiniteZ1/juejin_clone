@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react'
+import { useRouter } from 'next/router'
 import { Article } from '@/types/Common'
 import { getCreatedTimeToNow } from '@/utils/dateTransform'
 import { EyeOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons'
@@ -6,6 +7,7 @@ import { Image, Pagination } from 'antd'
 
 const EntryList: React.FC<PropsType> = (porps) => {
   const { articles } = porps
+  const router = useRouter()
   const [currentPage, setCurrentPage] = useState(1) //页码
   const currentArticles = useMemo(() => {
     const start = (currentPage - 1) * 5 //5篇一页
@@ -16,10 +18,14 @@ const EntryList: React.FC<PropsType> = (porps) => {
     setCurrentPage(page)
   }
 
+  const toArticle = (id: number) => {
+    return () => router.push(`/detail/${id}`)
+  }
+
   return (
     <div className='entry-list'>
       {currentArticles.map((item) => (
-        <div className='entry' key={item.id}>
+        <div className='entry' key={item.id} onClick={toArticle(item.id)}>
           <ul className='entry-header'>
             <li className='entry-author'>{item.author}</li>
             <li className='dividing'></li>
