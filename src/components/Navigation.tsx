@@ -22,7 +22,7 @@ const Navigation: React.FC<PropsType> = (props) => {
 
   const themeChange = () => {
     const html = document.querySelector('html')!
-    const theme =  html.getAttribute('data-theme')
+    const theme = html.getAttribute('data-theme')
     html.setAttribute('data-theme', theme == 'light' ? 'dark' : 'light')
   }
 
@@ -79,12 +79,16 @@ const Navigation: React.FC<PropsType> = (props) => {
         onOpenChange={onDropdownOpenChange}
       >
         <div className={'banner-more is-folder' + (dropdownOpen ? ' is-active' : '')}>
-          <span className='banner-more-text'>{activeName}</span>
+          <span className='banner-more-text'>
+            {activeName ? activeName : banners.find((item) => item.path == '/')?.title}
+          </span>
           <CaretDownOutlined className='icon' />
         </div>
       </Dropdown>
       <div style={{ flex: 1 }}></div>
-      <div className='theme' onClick={themeChange}>切换主题</div>
+      <div className='theme' onClick={themeChange}>
+        切换主题
+      </div>
     </div>
   )
 }

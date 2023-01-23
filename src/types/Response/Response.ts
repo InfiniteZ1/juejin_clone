@@ -12,3 +12,11 @@ export interface Response<T> {
     }
   }
 }
+
+export interface DesignatedResponse<T> {
+  data: {
+    id: number
+    attributes: T
+  }
+  meta: {}
+}

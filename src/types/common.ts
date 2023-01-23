@@ -42,6 +42,7 @@ export interface Passage extends Attribute {
   tab: string
   tags: string
   sorts: string | null
+  authorId: number
 }
 
 export interface Article extends Passage {
@@ -59,4 +60,10 @@ export interface Rank extends Attribute {
   level: string//图片链接
   post: string
   company: string | null
+}
+
+export interface Author extends Attribute {
+  name: string
+  avatar: string
+  level: string
 }

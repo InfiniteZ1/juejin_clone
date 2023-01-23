@@ -1,10 +1,14 @@
 //所有页面的样式
 @use './Home.scss';
+@use './Detail.scss';
 
 //所有组件的样式
 @use './Navigation.scss';
 @use './EntryList.scss';
 @use './AuthorRank.scss';
+
+@import './github-markdown-css/github-markdown-light.scss';
+@import './github-markdown-css/github-markdown-dark.scss';
 
 :root {
   background-color: var(--html-background-color);
@@ -34,7 +38,9 @@
   --font-third: #8a919f;
   --font-fourth: #c2c8d1;
   --divide: #e5e6eb;
-  --hover-background: hsla(0,0%,84.7%,.1);
+  --hover-background: hsla(0, 0%, 84.7%, 0.1);
+  --github-background: #fff;
+  @include markdown-light;
 }
 
 :root[data-theme='dark'] {
@@ -55,5 +61,7 @@
   --font-third: #8c8c8c;
   --font-fourth: #595959;
   --divide: #e5e6eb;
-  --hover-background: hsla(0,0%,84.7%,.1);
+  --hover-background: hsla(0, 0%, 84.7%, 0.1);
+  --github-background: #0d1117;
+  @include markdown-dark;
 }

@@ -1,0 +1,77 @@
+.detail {
+  cursor: default;
+
+  &-content {
+    position: relative;
+    max-width: 1140px;
+    margin: 20px auto 0 auto;
+  }
+
+  &-article {
+    max-width: calc(100% - 324px);
+    background-color: var(--github-background);
+    padding: 24px 36px;
+    // height: 600px;
+
+    @media screen and (max-width: 1024px) {
+      max-width: 100%;
+    }
+
+    .article-title {
+      font-weight: 600;
+      color: var(--font-first);
+    }
+
+    .article-profile {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+
+      .article-info {
+        margin-left: 5px;
+
+        .article-user {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          color: var(--font-first);
+          height: 24px;
+
+          .ant-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 35px;
+            height: 16px;
+            margin-left: 8px;
+          }
+        }
+
+        .article-data {
+          color: var(--font-third);
+
+          span {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+
+    // .markdown-body {
+      
+    // }
+  }
+
+  &-aside {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--background);
+    width: 300px;
+    // height: 600px;
+
+    @media screen and (max-width: 1024px) {
+      display: none;
+    }
+  }
+}
