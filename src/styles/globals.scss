@@ -40,6 +40,7 @@
   --divide: #e5e6eb;
   --hover-background: hsla(0, 0%, 84.7%, 0.1);
   --github-background: #fff;
+  --hover-list:  #f7f8fa;
   @include markdown-light;
 }
 
@@ -63,5 +64,6 @@
   --divide: #e5e6eb;
   --hover-background: hsla(0, 0%, 84.7%, 0.1);
   --github-background: #0d1117;
+  --hover-list: hsla(0, 0%, 84.7%, 0.1);
   @include markdown-dark;
 }

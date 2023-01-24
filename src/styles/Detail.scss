@@ -1,3 +1,12 @@
+@mixin detail-title {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 16px 0;
+  margin: 0 20px;
+  color: var(--font-first);
+  border-bottom: 1px solid #e4e6eb;
+}
+
 .detail {
   cursor: default;
 
@@ -56,22 +65,101 @@
         }
       }
     }
-
-    // .markdown-body {
-      
-    // }
   }
 
   &-aside {
     position: absolute;
     top: 0;
     right: 0;
-    background-color: var(--background);
     width: 300px;
     // height: 600px;
 
     @media screen and (max-width: 1024px) {
       display: none;
+    }
+
+    .detail-author {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      background-color: var(--background);
+
+      &-info {
+        font-size: 14px;
+        color: var(--font-first);
+        margin-left: 10px;
+      }
+
+      &-position {
+        color: var(--font-third);
+        margin-top: 6px;
+      }
+    }
+
+    .detail-relevant {
+      margin: 16px 0;
+      background-color: var(--background);
+
+      &-title {
+        @include detail-title;
+      }
+
+      &-list {
+        list-style: none;
+        padding: 8px 0;
+
+        .relevant-link {
+          text-decoration: none;
+
+          &:hover .relevant-item-title {
+            color: var(--brand-hover);
+          }
+
+          .relevant-item {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--font-first);
+            padding: 8px 16px;
+
+            &-data {
+              font-size: 12px;
+              color: var(--font-third);
+              margin-top: 4px;
+            }
+          }
+        }
+      }
+    }
+
+    .detail-catalog {
+      list-style: none;
+      background-color: var(--background);
+
+      &-title {
+        @include detail-title;
+      }
+
+      &-list {
+        list-style: none;
+        padding-bottom: 12px;
+        max-height: 460px;
+        overflow: auto;
+
+        .detail-catalog-item {
+          padding: 8px 8px 0 8px;
+
+          .detail-catalog-link {
+            display: block;
+            text-decoration: none;
+            color: var(--font-first);
+            padding: 8px 12px;
+
+            &:hover {
+              background-color: var(--hover-list);
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -66,4 +66,6 @@ export interface Author extends Attribute {
   name: string
   avatar: string
   level: string
+  post: string
+  company: string | null
 }
