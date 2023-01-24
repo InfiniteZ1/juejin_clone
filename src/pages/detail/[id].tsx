@@ -46,7 +46,9 @@ const Detail: React.FC<PropsType> = (props) => {
     let paddingLeft = 0
 
     return contentHeadRefs.current.map((item, index, arr) => {
-      paddingLeft = item.tagName > arr[index - 1]?.tagName ? paddingLeft + 12 : 0
+      if (item.tagName != arr[index - 1]?.tagName) {
+        paddingLeft = item.tagName > arr[index - 1]?.tagName ? paddingLeft + 12 : 0
+      }
       const className = 'detail-catalog-link' + (activeHeadIndex == index ? ' is-active' : '')
 
       return (
