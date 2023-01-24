@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -8,7 +8,7 @@ import hightLight from 'highlight.js' //https://github.com/highlightjs/highlight
 import 'highlight.js/styles/atom-one-dark.css' //highlight.js样式
 import markdownItAnchor from 'markdown-it-anchor'
 import Navigation from '@/components/Navigation'
-import { Avatar, Image } from 'antd'
+import { Avatar, Image, Affix } from 'antd'
 import { getDesignatedAuthor, getDesignatedPassage } from '@/api/detailApi'
 import { getBanners, getPassages } from '@/api/homeApi'
 
@@ -35,21 +35,24 @@ const Detail: React.FC<PropsType> = (props) => {
   const mdResult = md.render(article ? article.content : '')
   const contentRef = useRef<HTMLDivElement>(null)
   const contentHeadRefs = useRef<HTMLHeadingElement[]>([])
+  const catalogRef = useRef<HTMLDivElement>(null)
   const relevantArticles = useMemo(
     () => articles.filter((item) => item.tab == article?.tab && item.id != article.id).slice(0, 10),
     [articles, article]
   ) //10篇相关文章
+  const [activeHeadIndex, setActiveHeadIndex] = useState(0)
 
   const createCatalogItems = () => {
     let paddingLeft = 0
 
     return contentHeadRefs.current.map((item, index, arr) => {
       paddingLeft = item.tagName > arr[index - 1]?.tagName ? paddingLeft + 12 : 0
+      const className = 'detail-catalog-link' + (activeHeadIndex == index ? ' is-active' : '')
 
       return (
         <li className='detail-catalog-item' key={item.id}>
           <div style={{ paddingLeft }}>
-            <Link className='detail-catalog-link' href={'#' + item.id}>
+            <Link className={className} href={'#' + item.id}>
               {item.innerText}
             </Link>
           </div>
@@ -60,11 +63,23 @@ const Detail: React.FC<PropsType> = (props) => {
 
   useEffect(() => {
     contentHeadRefs.current.splice(0, contentHeadRefs.current.length)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((item) => {
+          if (item.isIntersecting) {
+            const index = contentHeadRefs.current.findIndex((head) => head.id == item.target.id)
+            setActiveHeadIndex(index)
+          }
+        })
+      },
+      { rootMargin: '0px 0px -96% 0px' }
+    )
     for (let i = 0; i < headLength; i++) {
       const key = 'head-' + i
       const heading = contentRef.current?.children.namedItem(key)
       if (heading) {
         contentHeadRefs.current.push(heading as HTMLHeadingElement)
+        observer.observe(heading)
       }
     }
     // console.log(contentHeadRefs.current)
@@ -132,10 +147,12 @@ const Detail: React.FC<PropsType> = (props) => {
                 ))}
               </ul>
             </div>
-            <div className='detail-catalog'>
-              <div className='detail-catalog-title'>目录</div>
-              <ul className='detail-catalog-list'>{createCatalogItems()}</ul>
-            </div>
+            <Affix offsetTop={16}>
+              <div ref={catalogRef} className='detail-catalog'>
+                <div className='detail-catalog-title'>目录</div>
+                <ul className='detail-catalog-list'>{createCatalogItems()}</ul>
+              </div>
+            </Affix>
           </div>
         </div>
       </div>

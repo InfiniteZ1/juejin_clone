@@ -135,6 +135,11 @@
       list-style: none;
       background-color: var(--background);
 
+      &.is-fixed {
+        position: fixed;
+        top: 10px;
+      }
+
       &-title {
         @include detail-title;
       }
@@ -156,6 +161,23 @@
 
             &:hover {
               background-color: var(--hover-list);
+            }
+
+            &.is-active {
+              position: relative;
+              color: var(--brand-normal);
+  
+              &::before {
+                content: '';
+                position: absolute;
+                top: 4px;
+                left: 0;
+                margin-top: 7px;
+                width: 4px;
+                height: 16px;
+                background: var(--brand-normal);
+                border-radius: 0 4px 4px 0;
+              }
             }
           }
         }

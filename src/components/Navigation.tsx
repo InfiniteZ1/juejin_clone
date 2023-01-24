@@ -40,7 +40,7 @@ const Navigation: React.FC<PropsType> = (props) => {
 
   return (
     <div className='navigation'>
-      <div className='logo'>
+      <div className='logo' onClick={() => router.push('/')}>
         <Image preview={false} src={'/logo.svg'} alt='' width={28} height={28} />
         <span>稀土掘金</span>
       </div>
