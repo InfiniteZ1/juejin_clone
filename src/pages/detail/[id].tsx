@@ -91,6 +91,7 @@ const Detail: React.FC<PropsType> = (props) => {
     <>
       <Head>
         <title>{article?.title + ' -掘金'}</title>
+        <meta name='description' content={article?.description} />
       </Head>
       <div className='detail'>
         <Navigation banners={banners} />

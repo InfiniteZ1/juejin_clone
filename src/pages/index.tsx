@@ -83,6 +83,7 @@ const Home: React.FC<PropsType> = (props) => {
     <>
       <Head>
         <title>高仿稀土掘金</title>
+        <meta name='description' content='掘金是面向全球中文开发者的技术内容分享与交流平台' />
       </Head>
       <div className='home'>
         <Navigation banners={banners} />
