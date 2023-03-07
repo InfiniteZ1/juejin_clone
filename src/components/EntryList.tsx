@@ -7,10 +7,10 @@ import { Image, Pagination } from 'antd'
 
 const EntryList: React.FC<PropsType> = (porps) => {
   const { articles } = porps
-  const [currentPage, setCurrentPage] = useState(1) //页码
+  const [currentPage, setCurrentPage] = useState(2) //页码
   const currentArticles = useMemo(() => {
-    const start = (currentPage - 1) * 5 //5篇一页
-    return articles.slice(start, start + 5)
+    const start = (currentPage - 1) * 4 //4篇一页
+    return articles.slice(start, start + 4)
   }, [currentPage, articles])
 
   const onPageChange = (page: number) => {
@@ -55,7 +55,7 @@ const EntryList: React.FC<PropsType> = (porps) => {
       ))}
       <Pagination
         current={currentPage}
-        total={(10 * articles.length) / 4}
+        total={Math.ceil(articles.length / 4) * 10}
         showSizeChanger={false}
         onChange={onPageChange}
       />
